@@ -17,7 +17,7 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'Destinations', href: '/destinations' },
     { name: 'Demo', href: '/demo' },
-    { name: 'About', href: '#about' },
+    { name: 'About', href: '/about' },
   ];
 
   const handleNavClick = (href: string) => {

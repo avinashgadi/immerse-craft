@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Destinations from "./pages/Destinations";
 import VRTour from "./pages/VRTour";
 import Demo from "./pages/Demo";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/destinations" element={<Destinations />} />
             <Route path="/vr-tour" element={<VRTour />} />
             <Route path="/demo" element={<Demo />} />
+            <Route path="/about" element={<About />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

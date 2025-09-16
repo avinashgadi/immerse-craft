@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import Navbar from '@/components/layout/Navbar';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { buildCloudinarySrcSet, buildCloudinaryUrl, cloudinaryAvailable } from '@/lib/cloudinary';
 
 // Import destination images
 import mountFujiImage from '@/assets/dest-mount-fuji.png';
@@ -49,21 +50,47 @@ const Destinations = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Map destination names to their corresponding images
-  const getDestinationImage = (name: string) => {
-    const imageMap: { [key: string]: string } = {
-      'Mount Fuji': mountFujiImage,
-      'Taj Mahal': tajMahalImage,
-      'Angkor Wat': angkorWatImage,
-      'Great Wall of China': greatWallImage,
-      'Tokyo Shibuya': tokyoShibuyaImage,
-      'Petra': petraImage,
-      'Borobudur': borobudurImage,
-      'Bagan Temples': baganTemplesImage,
-      'Ha Long Bay': haLongBayImage,
-      'Jeju Island': jejuIslandImage,
-    };
-    return imageMap[name] || '/placeholder.svg';
+  // Map destination names to their corresponding images / Cloudinary public IDs
+  const localImageMap: { [key: string]: string } = {
+    'Mount Fuji': mountFujiImage,
+    'Taj Mahal': tajMahalImage,
+    'Angkor Wat': angkorWatImage,
+    'Great Wall of China': greatWallImage,
+    'Tokyo Shibuya': tokyoShibuyaImage,
+    'Petra': petraImage,
+    'Borobudur': borobudurImage,
+    'Bagan Temples': baganTemplesImage,
+    'Ha Long Bay': haLongBayImage,
+    'Jeju Island': jejuIslandImage,
+  };
+
+  // Optional Cloudinary public IDs. Replace with your actual public IDs if different.
+  const cloudinaryPublicIdMap: { [key: string]: string } = {
+    'Mount Fuji': 'immersive/dest-mount-fuji',
+    'Taj Mahal': 'immersive/dest-taj-mahal',
+    'Angkor Wat': 'immersive/dest-angkor-wat',
+    'Great Wall of China': 'immersive/dest-great-wall',
+    'Tokyo Shibuya': 'immersive/dest-tokyo-shibuya',
+    'Petra': 'immersive/dest-petra',
+    'Borobudur': 'immersive/dest-borobudur',
+    'Bagan Temples': 'immersive/dest-bagan-temples',
+    'Ha Long Bay': 'immersive/dest-ha-long-bay',
+    'Jeju Island': 'immersive/dest-jeju-island',
+  };
+
+  const getResponsiveImage = (name: string) => {
+    const fallback = localImageMap[name] || '/placeholder.svg';
+    if (!cloudinaryAvailable()) {
+      return { src: fallback, srcSet: undefined as string | undefined, sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw' };
+    }
+    const publicId = cloudinaryPublicIdMap[name];
+    if (!publicId) {
+      return { src: fallback, srcSet: undefined as string | undefined, sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw' };
+    }
+    const src = buildCloudinaryUrl(publicId, { width: 800, height: 400, fit: 'fill', quality: 'auto', format: 'auto', dpr: 'auto', gravity: 'auto' }) || fallback;
+    const srcSetArr = buildCloudinarySrcSet(publicId, [320, 480, 640, 768, 1024, 1280, 1600]);
+    const srcSet = srcSetArr ? srcSetArr.join(', ') : undefined;
+    return { src, srcSet, sizes: '(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw' };
   };
 
   const regions = ['All', 'Asia', 'Europe', 'Americas', 'Africa', 'Oceania'];
@@ -237,11 +264,26 @@ const Destinations = () => {
               >
                 <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover-scale">
                   <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={getDestinationImage(destination.name)}
-                      alt={destination.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
+                    {(() => {
+                      const responsive = getResponsiveImage(destination.name);
+                      return (
+                        <img
+                          src={responsive.src}
+                          srcSet={responsive.srcSet}
+                          sizes={responsive.sizes}
+                          alt={destination.name}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            target.src = localImageMap[destination.name] || '/placeholder.svg';
+                            target.removeAttribute('srcset');
+                            target.removeAttribute('sizes');
+                          }}
+                        />
+                      );
+                    })()}
                     {destination.featured && (
                       <Badge className="absolute top-2 left-2 bg-primary">
                         Featured
