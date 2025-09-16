@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-display: swap;
+}
+
+/* CloudVR Tours Design System - Immersive VR Tourism Experience */
+
+@layer base {
+  :root {
+    /* VR-inspired color palette */
+    --background: 220 25% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 25% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 25% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Vibrant VR primary - electric blue */
+    --primary: 217 91% 60%;
+    --primary-foreground: 220 25% 6%;
+    --primary-glow: 217 91% 70%;
+
+    /* Warm secondary - sunset orange */
+    --secondary: 25 95% 53%;
+    --secondary-foreground: 220 25% 6%;
+
+    /* Subtle accents */
+    --muted: 220 25% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 280 100% 70%;
+    --accent-foreground: 220 25% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 25% 15%;
+    --input: 220 25% 12%;
+    --ring: 217 91% 60%;
+
+    --radius: 1rem;
+
+    /* VR-inspired gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%), hsl(280 100% 70%), hsl(25 95% 53%));
+    --gradient-card: linear-gradient(145deg, hsl(220 25% 8%), hsl(220 25% 12%));
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(217 91% 60% / 0.3), transparent 70%);
+    
+    /* Immersive shadows */
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.4);
+    --shadow-card: 0 10px 30px -10px hsl(220 25% 4% / 0.8);
+    --shadow-floating: 0 20px 60px -15px hsl(217 91% 60% / 0.3);
+
+    /* Smooth animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  /* VR-inspired custom animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: var(--shadow-glow); }
+    50% { box-shadow: 0 0 60px hsl(217 91% 60% / 0.6); }
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+  .animate-gradient { 
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
+  }
+}
+
+@layer components {
+  /* Hero gradient background */
+  .hero-gradient {
+    background: var(--gradient-hero);
+    @apply animate-gradient;
+  }
+  
+  /* Glassmorphism effects */
+  .glass {
+    background: hsl(220 25% 8% / 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(220 25% 15% / 0.5);
+  }
+  
+  /* VR viewer glow effect */
+  .vr-glow {
+    @apply animate-glow-pulse;
+    background: var(--gradient-glow);
+  }
+}
