@@ -222,6 +222,7 @@ const Auth = () => {
                     variant="outline"
                     className="w-full"
                     onClick={handleGoogleSignIn}
+                    disabled
                   >
                     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                       <path
@@ -241,7 +242,7 @@ const Auth = () => {
                         fill="#EA4335"
                       />
                     </svg>
-                    Continue with Google
+                    Google OAuth (Disabled - Enable in Supabase)
                   </Button>
                 </form>
               </TabsContent>
@@ -331,6 +332,7 @@ const Auth = () => {
                     variant="outline"
                     className="w-full"
                     onClick={handleGoogleSignIn}
+                    disabled
                   >
                     <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                       <path
@@ -350,7 +352,7 @@ const Auth = () => {
                         fill="#EA4335"
                       />
                     </svg>
-                    Continue with Google
+                    Google OAuth (Disabled - Enable in Supabase)
                   </Button>
                 </form>
               </TabsContent>

@@ -17,10 +17,11 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'Destinations', href: '/destinations' },
     { name: 'Demo', href: '/demo' },
-    { name: 'About', href: '/about' },
+    { name: 'About', href: '#', disabled: true },
   ];
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, disabled?: boolean) => {
+    if (disabled) return; // Don't navigate if disabled
     if (href.startsWith('/')) {
       navigate(href);
     } else {
@@ -67,10 +68,15 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <motion.button
                 key={link.name}
-                onClick={() => handleNavClick(link.href)}
-                className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
-                whileHover={{ y: -2 }}
+                onClick={() => handleNavClick(link.href, link.disabled)}
+                className={`transition-colors duration-300 font-medium ${
+                  link.disabled 
+                    ? 'text-muted-foreground cursor-not-allowed' 
+                    : 'text-foreground hover:text-primary'
+                }`}
+                whileHover={link.disabled ? {} : { y: -2 }}
                 transition={{ duration: 0.2 }}
+                disabled={link.disabled}
               >
                 {link.name}
               </motion.button>
@@ -140,8 +146,13 @@ const Navbar = () => {
                     {navLinks.map((link) => (
                       <button
                         key={link.name}
-                        onClick={() => handleNavClick(link.href)}
-                        className="text-lg font-medium hover:text-primary transition-colors text-left"
+                        onClick={() => handleNavClick(link.href, link.disabled)}
+                        className={`text-lg font-medium transition-colors text-left ${
+                          link.disabled 
+                            ? 'text-muted-foreground cursor-not-allowed' 
+                            : 'hover:text-primary'
+                        }`}
+                        disabled={link.disabled}
                       >
                         {link.name}
                       </button>
