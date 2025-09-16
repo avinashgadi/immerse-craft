@@ -133,7 +133,7 @@ const About = () => {
                 </Badge>
               </div>
               <p className="text-gray-600">
-                Expected launch: Q2 2024
+                Expected launch: Nov 2025
               </p>
             </CardContent>
           </Card>
@@ -252,7 +252,7 @@ const About = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center mt-12 text-gray-500"
         >
-          <p>© 2024 CloudVR Tours. All rights reserved.</p>
+          <p>© 2025 CloudVR Tours. All rights reserved.</p>
           <p className="mt-2">Building the future of virtual tourism, one experience at a time.</p>
         </motion.div>
       </div>
