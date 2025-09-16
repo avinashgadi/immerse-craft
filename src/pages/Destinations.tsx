@@ -12,11 +12,11 @@ import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 
 // Import destination images
-import mountFujiImage from '@/assets/dest-mount-fuji.jpg';
+import mountFujiImage from '@/assets/dest-mount-fuji.png';
 import tajMahalImage from '@/assets/dest-taj-mahal.jpg';
-import angkorWatImage from '@/assets/dest-angkor-wat.jpg';
-import greatWallImage from '@/assets/dest-great-wall.jpg';
-import tokyoShibuyaImage from '@/assets/dest-tokyo-shibuya.jpg';
+import angkorWatImage from '@/assets/dest-angkor-wat.png';
+import greatWallImage from '@/assets/dest-great-wall.png';
+import tokyoShibuyaImage from '@/assets/dest-tokyo-shibuya.png';
 import petraImage from '@/assets/dest-petra.jpg';
 import borobudurImage from '@/assets/dest-borobudur.jpg';
 import baganTemplesImage from '@/assets/dest-bagan-temples.jpg';
