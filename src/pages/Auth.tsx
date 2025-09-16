@@ -53,24 +53,33 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      console.log('Attempting sign up with:', { email: formData.email, displayName: formData.displayName });
+      
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
           emailRedirectTo: `${window.location.origin}/auth?redirect=/`,
           data: {
             display_name: formData.displayName
-          }
+          },
+          captchaToken: null
         }
       });
 
-      if (error) throw error;
+      console.log('Sign up response:', { data, error });
+
+      if (error) {
+        console.error('Sign up error:', error);
+        throw error;
+      }
 
       toast({
         title: "Account created!",
         description: "Please check your email to confirm your account."
       });
     } catch (error: any) {
+      console.error('Sign up exception:', error);
       toast({
         title: "Error",
         description: error.message,
@@ -86,18 +95,26 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log('Attempting sign in with:', { email: formData.email });
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
       });
 
-      if (error) throw error;
+      console.log('Sign in response:', { data, error });
+
+      if (error) {
+        console.error('Sign in error:', error);
+        throw error;
+      }
 
       toast({
         title: "Welcome back!",
         description: "Successfully signed in."
       });
     } catch (error: any) {
+      console.error('Sign in exception:', error);
       toast({
         title: "Error",
         description: error.message,

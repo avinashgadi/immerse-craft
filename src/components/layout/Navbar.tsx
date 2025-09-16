@@ -109,7 +109,7 @@ const Navbar = () => {
                       <User className="h-4 w-4 mr-2" />
                       Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/purchases')}>
+                    <DropdownMenuItem onClick={() => navigate('/my-tours')}>
                       <ShoppingCart className="h-4 w-4 mr-2" />
                       My Tours
                     </DropdownMenuItem>
