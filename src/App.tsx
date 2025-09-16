@@ -11,6 +11,7 @@ import VRTour from "./pages/VRTour";
 import Demo from "./pages/Demo";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import ChatAssistant from "@/components/ui/ChatAssistant";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ChatAssistant />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
